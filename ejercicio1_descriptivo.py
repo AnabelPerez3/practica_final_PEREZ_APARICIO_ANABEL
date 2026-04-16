@@ -45,25 +45,32 @@ columnas_analisis = [
     'TOTAL_VEHICULOS'
 ]
 
-def calcular_media(df, columnas_analisis):
-    media = df[columnas_analisis].mean()
-    return {"media": media}
+media = datos[columnas_analisis].mean()
+mediana = datos[columnas_analisis].median()
+moda = datos[columnas_analisis].mode().iloc[0]
+varianza = ['TOTAL_VICTIMAS_24H'].var()
 
-def calcular_mediana(df, columnas_analisis):
-    mediana = df[columnas_analisis].median()
-    return {"mediana": mediana}
+q1 = datos['TOTAL_VICTIMAS_24H'].quantile(0.25)
+q2 = datos['TOTAL_VICTIMAS_24H'].quantile(0.50)
+q3 = datos['TOTAL_VICTIMAS_24H'].quantile(0.75)
 
-def calcular_moda(df, columnas_analisis):
-    moda = df[columnas_analisis].mode().iloc[0]
-    return {"moda": moda}
+print(q1, q2, q3)
 
-    
-print("Media:\n", calcular_media(datos, columnas_analisis))
-print("\nMediana:\n", calcular_mediana(datos, columnas_analisis))
-print("\nModa:\n", calcular_moda(datos, columnas_analisis))
+iqr = q3 - q1
+print(iqr)
 
-def calcular_varianza(df,columnas_analisis):
-    return df[columnas_analisis].var()
+variable_objetivo = 'TOTAL_VICTIMAS_24H'
 
-print("Varianza:\n", calcular_varianza(datos, columnas_analisis))
+skewness = datos[variable_objetivo].skew()
+curtosis = datos[variable_objetivo].kurtosis()
 
+print("media:", media)
+print("mediana", mediana)
+print("moda:",moda)
+print("varianza:", varianza)
+print("q1:", q1)
+print("q2:", q2)
+print("q3:",q3)
+print("iqr:",iqr)
+print("Skewness:", skewness)
+print("Curtosis:", curtosis)
