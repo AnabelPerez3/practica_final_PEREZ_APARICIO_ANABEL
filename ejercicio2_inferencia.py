@@ -177,7 +177,7 @@ def grafica_residuos(y_test, y_pred):
     plt.tight_layout()
     plt.savefig(f"{OUTPUT_DIR}/ej2_residuos.png", dpi=150, bbox_inches="tight")
     plt.close()
-    print("  [✓] ej2_residuos.png guardado")
+    print("ej2_residuos.png guardado")
 
 
 # ─────────────────────────────────────────────
