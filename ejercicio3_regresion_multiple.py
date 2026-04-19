@@ -66,33 +66,6 @@ def calcular_r2(y_real: np.ndarray, y_pred: np.ndarray) -> float:
     return float(1.0 - ss_res / ss_tot)
 
 
-def grafica_real_vs_predicho(y_real: np.ndarray, y_pred: np.ndarray) -> None:
-    """
-    Genera un scatter plot de Valores Reales vs Valores Predichos con
-    la línea de referencia perfecta (y = x) y guarda ej3_predicciones.png.
-    """
-    fig, ax = plt.subplots(figsize=(8, 7))
-
-    ax.scatter(y_real, y_pred, alpha=0.4, s=15, color="#4C72B0",edgecolors="none", label="Predicciones")
-
-    # Línea de referencia perfecta
-    lim_min = min(y_real.min(), y_pred.min()) - 0.5
-    lim_max = max(y_real.max(), y_pred.max()) + 0.5
-    ax.plot([lim_min, lim_max], [lim_min, lim_max], color="#DD4C4C", linewidth=2, linestyle="--", label="Predicción perfecta")
-
-    r2 = calcular_r2(y_real, y_pred)
-    ax.set_xlabel("Valores Reales", fontsize=12)
-    ax.set_ylabel("Valores Predichos", fontsize=12)
-    ax.set_title(f"Valores Reales vs Predichos — OLS NumPy\nR² = {r2:.4f}", fontsize=13, fontweight="bold")
-    ax.legend(fontsize=10)
-    ax.grid(alpha=0.3)
-
-    plt.tight_layout()
-    plt.savefig(f"{OUTPUT_DIR}/ej3_predicciones.png", dpi=150, bbox_inches="tight")
-    plt.close()
-    print("ej3_predicciones.png guardado")
-
-
 # ─────────────────────────────────────────────
 # GENERACIÓN DE DATOS SINTÉTICOS (NO MODIFICAR)
 # ─────────────────────────────────────────────
@@ -121,7 +94,7 @@ def generar_datos_sinteticos(n: int = 1000, test_size: float = 0.2, seed: int = 
 # ─────────────────────────────────────────────
 
 if __name__ == "__main__":
-    print("\n>>> EJERCICIO 3 — REGRESIÓN LINEAL MÚLTIPLE EN NUMPY (OLS) <<<\n")
+    print("\nEJERCICIO 3 — REGRESIÓN LINEAL MÚLTIPLE EN NUMPY (OLS)\n")
 
     # Generar datos sintéticos con semilla fija
     X_train, X_test, y_train, y_test, betas_reales = generar_datos_sinteticos(
@@ -157,25 +130,6 @@ if __name__ == "__main__":
     ref = {"β₀": 5.0, "β₁": 2.0, "β₂": -1.0, "β₃": 0.5,"MAE": 1.20, "RMSE": 1.50, "R2": 0.80}
     for k, v in ref.items():
         print(f"  {k:6s}: referencia ≈ {v:.2f}")
-
-    # Guardar resultados en ficheros de texto
-    with open(f"{OUTPUT_DIR}/ej3_coeficientes.txt", "w", encoding="utf-8") as f:
-        f.write("=== COEFICIENTES OLS — DATOS SINTÉTICOS (semilla=42) ===\n\n")
-        f.write(f"{'Coeficiente':<20} {'Real':>10} {'Ajustado':>12} {'Error abs':>12}\n")
-        f.write("-" * 56 + "\n")
-        for etiq, real, ajust in zip(etiquetas, betas_reales, betas_ajustados):
-            f.write(f"{etiq:<20} {real:>10.4f} {ajust:>12.4f} {abs(real-ajust):>12.4f}\n")
-        f.write("\nNota: valores de referencia del profesor: β₀≈5, β₁≈2, β₂≈-1, β₃≈0.5\n")
-    print("\n ej3_coeficientes.txt guardado")
-
-    with open(f"{OUTPUT_DIR}/ej3_metricas.txt", "w", encoding="utf-8") as f:
-        f.write("=== MÉTRICAS OLS — TEST SET SINTÉTICO (semilla=42) ===\n\n")
-        f.write(f"MAE  (Mean Absolute Error)  = {mae:.6f}   (referencia: ≈1.20 ±0.20)\n")
-        f.write(f"RMSE (Root Mean Sq. Error)  = {rmse:.6f}   (referencia: ≈1.50 ±0.20)\n")
-        f.write(f"R²   (Coef. Determinación)  = {r2:.6f}   (referencia: ≈0.80 ±0.05)\n\n")
-        f.write("Implementación: solución analítica OLS con NumPy únicamente.\n")
-        f.write("β = (XᵀX)⁻¹ Xᵀy — resuelto con np.linalg.lstsq para estabilidad numérica.\n")
-    print(" ej3_metricas.txt guardado")
 
     # Gráfico Real vs Predicho
     grafica_real_vs_predicho(y_test, y_pred)
