@@ -172,7 +172,7 @@ def grafica_histogramas(df: pd.DataFrame) -> None:
 def detectar_outliers(df: pd.DataFrame) -> None:
     """
     Detecta outliers en la variable objetivo mediante el método IQR
-    e imprime un resumen. Guarda ej1_outliers.txt.
+    e imprime un resumen.
     """
     print()
     print("──── Detección de outliers (método IQR) en TOTAL_VICTIMAS_24H ────")
@@ -185,22 +185,7 @@ def detectar_outliers(df: pd.DataFrame) -> None:
     pct = len(outliers) / len(df) * 100
     print(f"  Límite inferior: {lim_inf:.2f}   Límite superior: {lim_sup:.2f}")
     print(f"  Outliers detectados: {len(outliers):,} ({pct:.2f}%)")
-    print("  Tratamiento: se conservan porque representan accidentes graves reales.")
-    print("  En el modelo se aplicará transformación log1p al target para suavizar el sesgo.")
-
-    with open(f"{Output_datos}/ej1_outliers.txt", "w", encoding="utf-8") as f:
-        f.write("=== DETECCIÓN DE OUTLIERS — MÉTODO IQR ===\n\n")
-        f.write(f"Variable objetivo: TOTAL_VICTIMAS_24H\n")
-        f.write(f"Q1 = {q1}, Q3 = {q3}, IQR = {iqr}\n")
-        f.write(f"Límite inferior (Q1 - 1.5·IQR) = {lim_inf:.4f}\n")
-        f.write(f"Límite superior (Q3 + 1.5·IQR) = {lim_sup:.4f}\n\n")
-        f.write(f"Outliers detectados: {len(outliers):,} ({pct:.2f}% del total)\n\n")
-        f.write("Tratamiento elegido: CONSERVAR\n")
-        f.write("Justificación: Los outliers son accidentes con múltiples víctimas (eventos graves pero reales). Eliminarlos sesgaria el análisis hacia accidentes leves.\n")
-        f.write("Para la regresión se aplicará transformación log1p(y) para reducir el sesgo.\n\n")
-        f.write(f"Valores extremos (top 10):\n")
-        f.write(outliers[["ID_ACCIDENTE", "TOTAL_VICTIMAS_24H", "TIPO_ACCIDENTE","MES"]].sort_values("TOTAL_VICTIMAS_24H", ascending=False).head(10).to_string(index=False))
-    print("ej1_outliers.txt guardado")
+    print("  Tratamiento: se conservan porque representan accidentes graves reales.En el modelo se aplicará transformación log1p al target para suavizar el sesgo.")
 
 def grafica_boxplots(df: pd.DataFrame) -> None:
     """
