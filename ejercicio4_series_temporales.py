@@ -143,50 +143,6 @@ def analizar_residuo(residuo: pd.Series) -> dict:
     print(f"  Estadístico ADF : {adf_stat:.4f}")
     print(f"  p-value         : {adf_pvalue:.6f}")
     print(f"  Conclusión      : {'ESTACIONARIO (p<0.05)' if adf_pvalue < 0.05 else 'NO estacionario (p≥0.05)'}")
-
-    # Test de normalidad Shapiro-Wilk (muestra 5000 por velocidad)
-    np.random.seed(42)
-    idx = np.random.choice(len(r), min(5000, len(r)), replace=False)
-    muestra = r.iloc[idx]
-    shapiro_stat, shapiro_p = stats.shapiro(muestra)
-    print()
-    print("──── Test de normalidad (Shapiro-Wilk, n=5000) ────")
-    print(f"  Estadístico W : {shapiro_stat:.4f}")
-    print(f"  p-value       : {shapiro_p:.6f}")
-    print(f"  Conclusión    : {'No se rechaza normalidad (p≥0.05)' if shapiro_p >= 0.05 else 'Se rechaza normalidad (p<0.05)'}")
-
-    resultados = {
-        "media": media, "std": std, "asimetria": asim, "curtosis": curt,
-        "adf_stat": adf_stat, "adf_pvalue": adf_pvalue,
-        "shapiro_stat": shapiro_stat, "shapiro_pvalue": shapiro_p,
-    }
-
-    # Guardar análisis en txt
-    with open(f"{OUTPUT_DIR}/ej4_analisis.txt", "w", encoding="utf-8") as f:
-        f.write("=== ANÁLISIS DEL RESIDUO — SERIE TEMPORAL SINTÉTICA ===\n\n")
-        f.write("── Estadísticos descriptivos ──\n")
-        f.write(f"  Media      = {media:.6f}\n")
-        f.write(f"  Std        = {std:.6f}\n")
-        f.write(f"  Asimetría  = {asim:.6f}\n")
-        f.write(f"  Curtosis   = {curt:.6f}\n\n")
-        f.write("── Test ADF (estacionariedad) ──\n")
-        f.write(f"  H₀: la serie tiene raíz unitaria (no es estacionaria)\n")
-        f.write(f"  Estadístico ADF = {adf_stat:.6f}\n")
-        f.write(f"  p-value         = {adf_pvalue:.6f}\n")
-        es_estac = adf_pvalue < 0.05
-        f.write(f"  Decisión: {'Rechazar H₀ → residuo ESTACIONARIO' if es_estac else 'No rechazar H₀ → residuo NO estacionario'}\n\n")
-        f.write("── Test Shapiro-Wilk (normalidad, n=5000) ──\n")
-        f.write(f"  Estadístico W = {shapiro_stat:.6f}\n")
-        f.write(f"  p-value       = {shapiro_p:.6f}\n")
-        es_normal = shapiro_p >= 0.05
-        f.write(f"  Decisión: {'No se rechaza normalidad' if es_normal else 'Se rechaza normalidad estricta'}\n\n")
-        f.write("── Conclusión sobre calidad del ruido ──\n")
-        f.write(f"  Media ≈ 0    : {'Sí' if abs(media) < 0.1 else 'No'} ({media:.4f})\n")
-        f.write(f"  Estacionario : {'Sí' if es_estac else 'No'}\n")
-        f.write(f"  Aprox. normal: {'Sí' if abs(asim) < 1 and abs(curt) < 3 else 'Parcialmente'}\n")
-        f.write("  → El residuo se aproxima a un ruido blanco gaussiano ideal.\n")
-    print("ej4_analisis.txt guardado")
-
     return resultados
 
 
