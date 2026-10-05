@@ -19,7 +19,7 @@ np.random.seed(42)
 # ─────────────────────────────────────────────
 # CONFIGURACIÓN DE RUTAS
 # ─────────────────────────────────────────────
-Datos = /Users/anabelperez/Downloads/Data Science Evolve/ESTADÍSTICA/TABLA_ACCIDENTES_24.XLSX - ACCIDENTES_24.csv
+Datos = "data/accidentes_2024.csv"
 Output_datos = "data/output"
 os.makedirs(Output_datos, exist_ok=True)
 
@@ -332,7 +332,7 @@ def grafica_correlaciones(df: pd.DataFrame) -> None:
 if __name__ == "__main__":
     print("\n EJERCICIO 1 — ANÁLISIS ESTADÍSTICO DESCRIPTIVO \n")
 
-    df = cargar_datos(df = cargar_datos(Datos))
+    df = cargar_datos(Datos)
 
     # A) Resumen estructural
     resumen_estructural(df)

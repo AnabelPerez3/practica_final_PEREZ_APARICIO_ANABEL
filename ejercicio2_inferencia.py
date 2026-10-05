@@ -221,8 +221,8 @@ if __name__ == "__main__":
         X_train, X_test, y_train, y_test, preprocessor
     )
 
-    graficar_residuos(y_test, y_pred)
+    grafica_residuos(y_test, y_pred)
     analizar_coeficientes(pipeline, num_feat, cat_feat)
 
     print()
-    print(">>> Ejercicio 2 completado. Ficheros guardados en data/output/ <<<")
+    print(">>> Ejercicio 2 completado. Ficheros guardados en data/output/ <<<")
