@@ -90,6 +90,37 @@ def generar_datos_sinteticos(n: int = 1000, test_size: float = 0.2, seed: int = 
 
 
 # ─────────────────────────────────────────────
+# GRÁFICO REAL VS PREDICHO
+# ─────────────────────────────────────────────
+
+def grafica_real_vs_predicho(y_real: np.ndarray, y_pred: np.ndarray) -> None:
+    """
+    Genera el gráfico de dispersión valores reales vs predichos, con la
+    línea de referencia y = x (predicción perfecta), y guarda
+    ej3_real_vs_predicho.png.
+    """
+    fig, ax = plt.subplots(figsize=(7, 7))
+    ax.scatter(y_real, y_pred, alpha=0.5, s=20, color="#4C72B0", edgecolor="white")
+
+    lim_min = min(y_real.min(), y_pred.min())
+    lim_max = max(y_real.max(), y_pred.max())
+    ax.plot([lim_min, lim_max], [lim_min, lim_max],
+            color="#DD4C4C", linewidth=1.5, linestyle="--",
+            label="y = x (predicción perfecta)")
+
+    ax.set_xlabel("Valor real")
+    ax.set_ylabel("Valor predicho")
+    ax.set_title("Real vs Predicho — Regresión OLS (NumPy)", fontsize=12, fontweight="bold")
+    ax.legend(fontsize=9)
+    ax.grid(alpha=0.3)
+
+    plt.tight_layout()
+    plt.savefig(f"{OUTPUT_DIR}/ej3_real_vs_predicho.png", dpi=150, bbox_inches="tight")
+    plt.close()
+    print("ej3_real_vs_predicho.png guardado")
+
+
+# ─────────────────────────────────────────────
 # MAIN
 # ─────────────────────────────────────────────
 
@@ -135,4 +166,4 @@ if __name__ == "__main__":
     grafica_real_vs_predicho(y_test, y_pred)
 
     print()
-    print("Ejercicio 3 completado. Ficheros guardados en data/output/")
+    print("Ejercicio 3 completado. Ficheros guardados en data/output/")

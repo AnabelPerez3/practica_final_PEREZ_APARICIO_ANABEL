@@ -143,6 +143,15 @@ def analizar_residuo(residuo: pd.Series) -> dict:
     print(f"  Estadístico ADF : {adf_stat:.4f}")
     print(f"  p-value         : {adf_pvalue:.6f}")
     print(f"  Conclusión      : {'ESTACIONARIO (p<0.05)' if adf_pvalue < 0.05 else 'NO estacionario (p≥0.05)'}")
+
+    resultados = {
+        "media": media,
+        "std": std,
+        "skewness": asim,
+        "curtosis": curt,
+        "adf_stat": adf_stat,
+        "adf_pvalue": adf_pvalue,
+    }
     return resultados
 
 
@@ -245,4 +254,4 @@ if __name__ == "__main__":
     print(f"  Amplitud estacional: ±{decomp.seasonal.max():.2f} unidades")
 
     print()
-    print("Ejercicio 4 completado. Ficheros guardados en data/output/")
+    print("Ejercicio 4 completado. Ficheros guardados en data/output/")
